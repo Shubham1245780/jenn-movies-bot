@@ -19,19 +19,19 @@ def is_enabled(value, default):
 
 # Bot information *
 SESSION = environ.get('SESSION', 'Media_search')
-API_ID = int(environ['API_ID'])
-API_HASH = environ['API_HASH']
-BOT_TOKEN = environ['BOT_TOKEN']
+API_ID = int(environ['24827799'])
+API_HASH = environ['33c2a6c12a838b01f6fac6894352f355']
+BOT_TOKEN = environ['7864776370:AAFa0ym15kb9LHw-CWxU6mQpjFXgkXvT5IQ']
 
 # Bot settings
 CACHE_TIME = int(environ.get('CACHE_TIME', 300))
 USE_CAPTION_FILTER = bool(environ.get('USE_CAPTION_FILTER', False))
-PICS = (environ.get('PICS', 'https://te.legra.ph/file/ce993e7fcf6e123f6aff3.jpg https://te.legra.ph/file/12a8246eb2709bcdfaa80.jpg https://te.legra.ph/file/cc4e89829bafc8b1765c3.jpg https://te.legra.ph/file/cc8e0b32a99f584e74f25.jpg')).split()
+PICS = (environ.get('PICS', 'https://ibb.co/j9xQ3J2S')).split()
 PRIME_LOGO = (environ.get('PRIME_LOGO', 'https://telegra.ph/file/ca18e2c794f4ea1c3135b.jpg'))
 
 # Admins, Channels & Users *
-ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1642897696').split()]
-CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1001722664138').split()]
+ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1522697510').split()]
+CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1002652712405').split()]
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
 auth_channel = environ.get('AUTH_CHANNEL')
@@ -40,15 +40,15 @@ AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_chan
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
 
 # MongoDB information
-DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://blastwallztv:27UY9mNJRPZDCb1D@cluster0.9xdsq6x.mongodb.net/?retryWrites=true&w=majority")
-DATABASE_NAME = environ.get('DATABASE_NAME', "Cluster0")
+DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://IpopkornM:IpopkornM@ipopkornm.xvrncjx.mongodb.net/?retryWrites=true&w=majority&appName=ipopkornM")
+DATABASE_NAME = environ.get('DATABASE_NAME', "IpopkornM")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'telegram_files')
 
 # LOG CHANNELS *
-LOG_CHANNEL = int(environ.get('LOG_CHANNEL', -1001624607501))
-LAZY_GROUP_LOGS = int(environ.get('LAZY_GROUP_LOGS', -1001624607501))
-REQ_CHANNEL = int(environ.get('REQ_CHANNEL', -1002087414807))
-PRIME_MEMBERS_LOGS = int(environ.get('PRIME_MEMBERS_LOGS', -1001624607501))
+LOG_CHANNEL = int(environ.get('LOG_CHANNEL', -1002534027920))
+LAZY_GROUP_LOGS = int(environ.get('LAZY_GROUP_LOGS', -1002534027920))
+REQ_CHANNEL = int(environ.get('REQ_CHANNEL', ))
+PRIME_MEMBERS_LOGS = int(environ.get('PRIME_MEMBERS_LOGS', ))
 
 # PREMIUM ACCESS *
 lazydownloaders = [int(lazydownloaders) if id_pattern.search(lazydownloaders) else lazydownloaders for lazydownloaders in environ.get('PRIME_DOWNLOADERS', '').split()]
@@ -57,8 +57,8 @@ lazy_renamers = [int(lazrenamers) if id_pattern.search(lazrenamers) else lazrena
 LAZY_RENAMERS = (lazy_renamers + ADMINS) if lazy_renamers else [] #Add user id of the user in this field those who you want to be Authentic user for file renaming features
 LZURL_PRIME_USERS = [int(lazyurlers) if id_pattern.search(lazyurlers) else lazyurlers for lazyurlers in environ.get('LZURL_PRIME_USERS', '5965340120').split()]
 
-QR_CODE_IMG = environ.get('QR_CODE_IMG','https://te.legra.ph/file/ce993e7fcf6e123f6aff3.jpg') #add url link of your qr code to recieve money - use telegraph bot or other source to get image
-UPI_ID = environ.get('UPI_ID', 'l') #enter your upi id here - grab it from your online payment methods.
+QR_CODE_IMG = environ.get('QR_CODE_IMG','https://ibb.co/FL9DBLYb') #add url link of your qr code to recieve money - use telegraph bot or other source to get image
+UPI_ID = environ.get('UPI_ID', '6207019491@axl') #enter your upi id here - grab it from your online payment methods.
 
 # Others
 TUTORIAL = environ.get('TUTORIAL', 'https://t.me/real_MoviesAdda3/186') # Tutorial video link for opening shortlink website 
