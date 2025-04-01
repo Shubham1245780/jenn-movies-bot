@@ -14,7 +14,7 @@ from lazybot import LazyPrincessBot
 from util.keepalive import ping_server
 from lazybot.clients import initialize_clients
 
-# Logging Configuration
+# ✅ Logging Configuration
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
@@ -23,15 +23,16 @@ logging.getLogger("aiohttp").setLevel(logging.ERROR)
 # ✅ Use Koyeb-assigned port (Default: 8080)
 PORT = int(os.environ.get("PORT", 8080))  
 
-LazyPrincessBot.start()
-
 async def Lazy_start():
     print('\nInitializing Telegram Bot...')
     
-    # Ensure download directory exists
+    # ✅ Ensure download directory exists
     if not os.path.isdir(DOWNLOAD_LOCATION):
         os.makedirs(DOWNLOAD_LOCATION)
 
+    # ✅ Start the bot properly inside the event loop
+    await LazyPrincessBot.start()
+    
     bot_info = await LazyPrincessBot.get_me()
     LazyPrincessBot.username = bot_info.username
 
@@ -57,7 +58,8 @@ async def Lazy_start():
     app = web.Application()
     app.add_routes([web.get("/", lambda request: web.Response(text="Bot is running on Koyeb! 🚀"))])  
 
-    runner = web.AppRunner(app)
+    # ✅ Use your actual web server setup
+    runner = web.AppRunner(await web_server())  
     await runner.setup()
 
     # ✅ Bind to 0.0.0.0 (required for Koyeb)
@@ -75,3 +77,4 @@ if __name__ == '__main__':
         logging.info('-----------------------🧐 Service running in Lazy Mode 😴-----------------------')
     except KeyboardInterrupt:
         logging.info('-----------------------😜 Service Stopped Sweetheart 😝-----------------------')
+        
