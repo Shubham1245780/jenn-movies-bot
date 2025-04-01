@@ -3,7 +3,7 @@ import logging.config
 import os
 import asyncio
 from aiohttp import web
-from pyrogram import Client, idle, __version__
+from pyrogram import Client, idle, __version__, errors
 from pyrogram.raw.all import layer
 from database.ia_filterdb import Media
 from database.users_chats_db import db
@@ -14,23 +14,23 @@ from lazybot import LazyPrincessBot
 from util.keepalive import ping_server
 from lazybot.clients import initialize_clients
 
-# ✅ Logging Configuration
+# Logging Configuration
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("aiohttp").setLevel(logging.ERROR)
 
-# ✅ Use Koyeb-assigned port (Default: 8080)
+# Use Koyeb-assigned port (Default: 8080)
 PORT = int(os.environ.get("PORT", 8080))  
 
 async def Lazy_start():
     print('\nInitializing Telegram Bot...')
     
-    # ✅ Ensure download directory exists
+    # Ensure download directory exists
     if not os.path.isdir(DOWNLOAD_LOCATION):
         os.makedirs(DOWNLOAD_LOCATION)
 
-    # ✅ Start the bot properly inside the event loop
+    # Start the bot properly inside the event loop
     await LazyPrincessBot.start()
     
     bot_info = await LazyPrincessBot.get_me()
@@ -38,7 +38,7 @@ async def Lazy_start():
 
     await initialize_clients()
 
-    if ON_HEROKU:  # ✅ Not needed for Koyeb, but safe to keep
+    if ON_HEROKU:  # Not needed for Koyeb, but safe to keep
         asyncio.create_task(ping_server())
 
     b_users, b_chats, lz_verified = await db.get_banned()
@@ -54,15 +54,15 @@ async def Lazy_start():
     temp.B_NAME = me.first_name
     LazyPrincessBot.username = '@' + me.username
 
-    # ✅ Web Server for Koyeb Health Checks
+    # Web Server for Koyeb Health Checks
     app = web.Application()
     app.add_routes([web.get("/", lambda request: web.Response(text="Bot is running on Koyeb! 🚀"))])  
 
-    # ✅ Use your actual web server setup
+    # Use your actual web server setup
     runner = web.AppRunner(await web_server())  
     await runner.setup()
 
-    # ✅ Bind to 0.0.0.0 (required for Koyeb)
+    # Bind to 0.0.0.0 (required for Koyeb)
     site = web.TCPSite(runner, "0.0.0.0", PORT)
     await site.start()
 
@@ -71,9 +71,19 @@ async def Lazy_start():
 
     await idle()
 
+async def handle_flood_wait():
+    """Handles FloodWait error by waiting for the specified time"""
+    try:
+        await Lazy_start()
+    except errors.FloodWait as e:
+        wait_time = e.x  # Get wait time from the exception
+        logging.warning(f"FloodWait triggered. Waiting for {wait_time} seconds.")
+        await asyncio.sleep(wait_time)  # Wait for the required time before retrying
+        await handle_flood_wait()  # Retry the bot start after waiting
+
 if __name__ == '__main__':
     try:
-        asyncio.run(Lazy_start())  # ✅ Fixes event loop issues
+        asyncio.run(handle_flood_wait())  # Call the function that handles FloodWait
         logging.info('-----------------------🧐 Service running in Lazy Mode 😴-----------------------')
     except KeyboardInterrupt:
         logging.info('-----------------------😜 Service Stopped Sweetheart 😝-----------------------')
