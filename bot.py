@@ -76,7 +76,7 @@ async def handle_flood_wait():
     try:
         await Lazy_start()
     except errors.FloodWait as e:
-        wait_time = e.x  # Get wait time from the exception
+        wait_time = e.value  # Correct way to access wait time
         logging.warning(f"FloodWait triggered. Waiting for {wait_time} seconds.")
         await asyncio.sleep(wait_time)  # Wait for the required time before retrying
         await handle_flood_wait()  # Retry the bot start after waiting
